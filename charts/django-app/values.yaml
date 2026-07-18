@@ -1,0 +1,31 @@
+image:
+  repository: 938094936571.dkr.ecr.us-west-2.amazonaws.com/lesson-6-django
+  tag: "0.1.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8000
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+
+envConfig:
+  POSTGRES_DB: "appdb"
+  POSTGRES_USER: "appuser"
+  POSTGRES_PASSWORD: "apppassword"
+  DB_HOST: "db"
+  DB_PORT: "5432"
+  DJANGO_DEBUG: "True"
