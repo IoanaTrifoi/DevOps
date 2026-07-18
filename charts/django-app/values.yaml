@@ -1,0 +1,40 @@
+image:
+  repository: 938094936571.dkr.ecr.us-west-2.amazonaws.com/ecr-repo-django-app
+  tag: latest
+  pullPolicy: IfNotPresent
+#  pullPolicy: Always
+
+service:
+  type: LoadBalancer
+  port: 8000
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilization: 70
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+ingress:
+  enabled: false
+#  className: nginx
+#  host: django.example.com
+#  path: /
+#  pathType: Prefix
+#  tls: true
+
+#config:
+#  POSTGRES_PORT: 5432
+#  POSTGRES_HOST: postgres
+#  POSTGRES_USER: django_user
+#  POSTGRES_DB: django_db
+#  POSTGRES_PASSWORD: pass9764gd
+#  ALLOWED_HOSTS: localhost,.us-west-2.elb.amazonaws.com
+

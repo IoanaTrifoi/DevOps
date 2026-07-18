@@ -1,0 +1,30 @@
+applications:
+  - name: example-app   # application name in Argo CD
+    namespace: default  # namespace in Kubernetes
+    project: default    # Argo CD project name
+    source:             # application source code
+      # repoURL: https://github.com/YOUR_USERNAME/example-repo.git
+      repoURL: ${github_repo_url} # link to the Git repository that stores the Helm chart or Kubernetes manifests
+      path: charts/django-app     # path inside the repository to the required chart or YAML files
+      targetRevision: lesson-8-9    # Git branch or tag to pull the application from (for example, main)
+      helm:
+        valueFiles:               # list of YAML files with settings that will be passed to the Helm chart
+          - values.yaml
+    destination:                              # specifies where exactly to deploy the application
+      server: https://kubernetes.default.svc  # Kubernetes API server address. For the in-cluster server use https://kubernetes.default.svc
+      namespace: default                      # Kubernetes namespace for this specific application
+    syncPolicy:           # synchronization policy
+      automated:          # enables automatic application of changes
+        prune: true       # delete resources that are no longer described in Git
+        selfHeal: true    # automatically fix deviations from the Git state if something was changed manually in the cluster
+
+repositories:
+  - name: example-app         # repository name for internal use
+    # url: https://github.com/YOUR_USERNAME/example-repo.git
+    url: ${github_repo_url}   # full URL of the Git repository
+    username: ${github_username}  # credentials to access the private repository
+    password: ${github_token}
+
+repoConfig:
+  insecure: "true"    # allows connecting to the repository without verifying SSL certificates. Not recommended for production
+  enableLfs: "true"   # allows using Git LFS (Large File Storage) if the repository stores large files
