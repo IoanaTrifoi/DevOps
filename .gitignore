@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+.env
+.env.local
+.env.*.local
+.DS_Store
+.vscode/
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+terraform.tfvars
+*.auto.tfvars
+
+# allow committing the lock file (useful)
+!.terraform.lock.hcl
